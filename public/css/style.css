@@ -277,6 +277,7 @@ header.navbar div.navbar-inner form.navbar-form span.search-input{
 
 header.navbar div.navbar-inner form.navbar-form span.search-input img{
     width: 20px;
+    opacity: 0.4;
 }
 
 header.navbar div.navbar-inner ul.nav{

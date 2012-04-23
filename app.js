@@ -4,7 +4,8 @@
  */
 
 var express = require('express')
-  , routes = require('./routes');
+  , routes = require('./routes/public')
+  , admin = require('./routes/admin');
 
 var app = module.exports = express.createServer();
 
@@ -39,7 +40,7 @@ function requiresLogin(req, res, next){
 };
 
 // Routes
-app.get('/admin/*', requiresLogin, routes.index);
+app.get('/admin', admin.index);
 app.get('/', routes.index);
 
 
