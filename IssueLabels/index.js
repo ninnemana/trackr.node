@@ -11,7 +11,7 @@ var IssueLabelSchema = new Schema({
 	hexColor: String
 });
 
-var IssueLabelModel = db.Model('IssueLabelModel', IssueLabelSchema);
+var IssueLabelModel = db.model('IssueLabelModel', IssueLabelSchema);
 
 var labels = {
 	add: function(name, hex, callback){
