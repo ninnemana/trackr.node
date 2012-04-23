@@ -111,13 +111,19 @@
         </article>
 
         <article class="module labels">
+          <% if(labels !== undefined && labels.length > 0){ %>
+            <ul>
+              <% labels.forEach(function(label){ %>
+                <li>
+                  <a href="#<%= label.name %>" title="<%= label.name %>">
+                    <span class="label" style="background-color:<%= label.hexColor %>"><%= label.name %></span>
+                    <span><%= label.issues.length %></span>
+                  </a>
+                </li>
+              <% }) %>
+            </ul>
+          <% } %>
           <ul>
-            <li>
-              <a href="#awating">
-                <span class="label" style="background-color:#fbc500">queued for feedback</span>
-                <span>2</span>
-              </a>
-            </li>
             <li>
               <a href="#bug">
                 <span class="label">bug</span>

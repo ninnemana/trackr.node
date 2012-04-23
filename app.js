@@ -5,7 +5,9 @@
 
 var express = require('express')
   , routes = require('./routes/public')
-  , admin = require('./routes/admin');
+  , admin = require('./routes/admin')
+  , auth = require('./routes/auth')
+  , labels = require('./IssueLabels');
 
 var app = module.exports = express.createServer();
 
@@ -33,15 +35,23 @@ app.configure('production', function(){
 
 function requiresLogin(req, res, next){
   if(!req.session.user){
-    res.redirect('/sessions/new');
+    res.redirect('/auth');
   }else{
     next();
   }
 };
 
+function loadLabels(req, res, next){
+  return labels.IssueLabels.getAll(function(labels){
+    res.local('labels',labels);
+    next();
+  });
+}
+
 // Routes
-app.get('/admin', admin.index);
-app.get('/', routes.index);
+app.get('/admin', requiresLogin, admin.index);
+app.get('/auth', auth.in);
+app.get('/', loadLabels, routes.index);
 
 
 app.listen(process.env.PORT || 3000);

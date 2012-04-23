@@ -5,5 +5,9 @@ var labels = require('../IssueLabels');
 
 exports.index = function(req, res){
 	var issueLabels = labels.IssueLabels;
-  	res.render('index', { title: 'Express' })
+	console.log(issueLabels);
+	issueLabels.getAll(function(labels){
+		console.log(labels);
+		res.render('index', { title: 'Express' })
+	});
 };
