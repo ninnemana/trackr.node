@@ -237,9 +237,57 @@ header{
 header img{
   margin:auto;
   display:block;
+  width: 200px;
+
+}
+
+section{
+  padding-top: 20px;
+}
+
+section div.alert{
+  width: 275px;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+section form.in{
+  width: 320px;
+  margin:auto;
+}
+
+section form.in input[type=text],section form.in input[type=password],section form.in input[type=email]{
+  width: 300px;
+  margin:auto;
+  height: 30px;
+  margin-bottom: 20px;
+}
+
+section form.in input[type=text]:focus,section form.in input[type=password]:focus,section form.in input[type=email]:focus{
+  border: 1px solid #999;
+  box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(241, 241, 241, 0.8);
+}
+
+section form.in input[type=text].error,section form.in input[type=password].error,section form.in input[type=email].error{
+  border: 2px solid #bf3504;
+  box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075),3px 3px 8px rgba(191, 53, 4, 0.8);
 }
 
 
+section form.in input[type=submit]{
+  float:right;
+}
+
+section form.in a.up{
+  float:right;
+  color: #f1f1f1;
+  font-size: 18px;
+  margin-right: 15px;
+  line-height:62px;
+  -webkit-transition: all 0.3s ease-in-out;
+}
+
+section form.in a.up:hover{ color: #d1d1d1; text-decoration: none;}
 
 
 

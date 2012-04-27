@@ -7,7 +7,8 @@ var express = require('express')
   , routes = require('./routes/public')
   , admin = require('./routes/admin')
   , auth = require('./routes/auth')
-  , labels = require('./IssueLabels');
+  , labels = require('./IssueLabels')
+  , RedisStore = require('connect-redis')(express);
 
 var app = module.exports = express.createServer();
 
@@ -20,7 +21,12 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(express.cookieParser());
   //app.use(express.cookieDecoder());
-  app.use(express.session({ secret: 'j@cks0n' }));
+  app.use(express.session({ 
+    secret: process.env.CLIENT_SECRET || 'j@cks0n',
+    maxAge: Date.now + 7200000,
+    store: new RedisStore({ maxAge: Date.now * 7200000 })
+  }));
+  app.use(express.query());
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
 });
@@ -49,8 +55,20 @@ function loadLabels(req, res, next){
 }
 
 // Routes
+
+/* Admin Routes */
 app.get('/admin', requiresLogin, admin.index);
+
+/* Authenticaton Routes */
 app.get('/auth', auth.in);
+app.get('/auth/new', auth.create);
+app.post('/auth/new', auth.save);
+app.post('/auth/allowed', auth.allowed);
+app.get('/auth/allowed', auth.in);
+app.get('/auth/show',auth.show);
+
+
+/* Public Routes */
 app.get('/', loadLabels, routes.index);
 
 

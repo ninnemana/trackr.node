@@ -76,108 +76,8 @@
 
   <div class="content">
       <section class="left-bar">
-
-        <a href="/new" title="Report Issue" class="btn btn-primary btn-large report-new">
-          <span>+</span>
-          <span>Report an Issue</span>
-        </a>
-        <article class="issue-types module">
-          <ul>
-            <li>
-              <a href="#everyone" class="active">
-                <span>Everyones Issues</span>
-                <span>7</span>
-              </a>
-            </li>
-            <li>
-              <a href="#created">
-                <span>Created by you</span>
-                <span>2</span>
-              </a>
-            </li>
-            <li>
-              <a href="#mention">
-                <span>Mentioning you</span>
-                <span>0</span>
-              </a>
-            </li>
-            <li>
-              <a href-"#assigned">
-                <span>Assigned to you</span>
-                <span>4</span>
-              </a>
-            </li>
-          </ul>
-        </article>
-
         <article class="module labels">
-          <% if(labels !== undefined && labels.length > 0){ %>
-            <ul>
-              <% labels.forEach(function(label){ %>
-                <li>
-                  <a href="#<%= label.name %>" title="<%= label.name %>">
-                    <span class="label" style="background-color:<%= label.hexColor %>"><%= label.name %></span>
-                    <span><%= label.issues.length %></span>
-                  </a>
-                </li>
-              <% }) %>
-            </ul>
-          <% } %>
-          <ul>
-            <li>
-              <a href="#bug">
-                <span class="label">bug</span>
-                <span>2</span>
-              </a>
-            </li>
-            <li>
-              <a href="#css">
-                <span class="label">css</span>
-                <span>3</span>
-              </a>
-            </li>
-            <li>
-              <a href="#html">
-                <span class="label">html</span>
-                <span>1</span>
-              </a>
-            </li>
-            <li>
-              <a href="#server">
-                <span class="label">server config</span>
-                <span>2</span>
-              </a>
-            </li>
-            <li>
-              <a href="#data">
-                <span class="label">data</span>
-                <span>4</span>
-              </a>
-            </li>
-            <li>
-              <a href="#documentation">
-                <span class="label">documentation</span>
-                <span>0</span>
-              </a>
-            </li>
-            <li>
-              <a href="#fix">
-                <span class="label">fix</span>
-                <span>0</span>
-              </a>
-            </li>
-            <li>
-              <a href="#javascript">
-                <span class="label">javascript</span>
-                <span>0</span>
-              </a>
-            </li>
-            <li>
-              <a href="#new-feature">
-                <span class="label">new feature</span>
-                <span>0</span>
-              </a>
-            </li>
+          
         </article>
       </section>
 
@@ -191,18 +91,6 @@
     <div class="container">
       <img src="/img/emblem.png" alt="Trackr Reporting" class="emblem" />
       <section class="footer-links">
-        <article>
-          <a href="#">Link</a>
-          <a href="#">Link</a>
-          <a href="#">Link</a>
-          <a href="#">Link</a>
-        </article>
-        <article>
-          <a href="#">Link</a>
-          <a href="#">Link</a>
-          <a href="#">Link</a>
-          <a href="#">Link</a>
-        </article>
         <article>
           <a href="#">Link</a>
           <a href="#">Link</a>
@@ -230,6 +118,7 @@
   <!-- scripts concatenated and minified via build script -->
   <script src="/js/plugins.js"></script>
   <script src="/js/main.js"></script>
+  <<script src="/js/admin.js"></script>
   <!-- end scripts -->
 
   <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.

@@ -1,0 +1,17 @@
+<% if(error){ %>
+	<!--span class="error">There was an error while logging you in</span-->
+	<div class="alert alert-error alert-block">
+		<button class="close" data-dismiss="alert">x</button>
+		<strong>Oh snap!</strong> Change a few things up and try submitting again.
+	</div>
+<% } %>
+<form method="post" action="/auth/allowed" class="in">
+	<label for="username">
+		<input type='text' name='username' placeholder='Username or e-mail'>
+	</label> 
+	<label for="password">
+		<input type='password' name='password' placeholder='Enter password'>
+	</label>
+	<input type='submit' name='btnIn' value='Sign In' class='btn btn-large btn-success'>
+	<a href="/auth/new" title="Sign Up" class="up">Sign Up</a>
+</form>

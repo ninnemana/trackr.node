@@ -1,13 +1,10 @@
-var labels = require('../IssueLabels');
+//var labels = require('../IssueLabels');
 /*
  * GET home page.
  */
 
 exports.index = function(req, res){
-	var issueLabels = labels.IssueLabels;
-	console.log(issueLabels);
-	issueLabels.getAll(function(labels){
-		console.log(labels);
-		res.render('index', { title: 'Express' })
-	});
+	var modules = [];
+	//var mondules = modules.getUserModules();
+	res.render('admin/index', { title: 'Express', locals: { modules: modules} });
 };
