@@ -1,0 +1,17 @@
+
+
+form.well(method='post', action='/admin/user/' + user._id + '/settings')
+	label Username
+		input.span3(type='text', placeholder='Enter a username', value=user.username, disabled='disabled')
+
+	label First Name
+		input.span3(type='text', name='fname', placeholder='Enter first name', value=user.fname)
+
+	label Last Name
+		input.span3(type='text', name='lname', placeholder='Enter last name', value=user.lname)
+
+	label Email
+		input.span3(type='email', name='email', placeholder='Enter email address', value=user.email)
+
+	input.btn.btn-success.btn-large(type='submit', value='Save')
+

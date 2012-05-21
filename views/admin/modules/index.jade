@@ -1,0 +1,34 @@
+link(rel='stylesheet',href='/css/admin/modules.css',media='all')
+
+h2.left= 'Modules'
+a.btn.btn-large.btn-success.right(href='/admin/mods/new', title='Add Module')= 'Add Module'
+div.clearfix
+table.table.table-striped.table-bordered
+	thead
+		tr
+			th= 'Name'
+			th= 'Path'
+			th= 'Icon'
+			th= 'Clearance'
+			th
+	tbody
+		for mod in mods
+			tr
+				td= mod.name
+				td= mod.path
+				td 
+					i(class=mod.icon)
+					= mod.icon
+				td= (mod.clearance === 'basic') ? 'Basic' : 'Sudo'
+				td
+					div.btn-group
+						a.btn.dropdown-toggle.btn-inverse(data-toggle="dropdown", href="#") Action
+							Action
+							span.caret
+						ul.dropdown-menu
+							li
+								a(href="/admin/mods/" + mod._id, title="Edit " + mod.name) Edit
+							li
+								a.delete(href="/admin/mods/" + mod._id + "/delete", title="Delete " + mod.name) Delete
+
+script(src='/js/admin/modules.js')

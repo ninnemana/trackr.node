@@ -1,0 +1,48 @@
+<table class="table table-striped table-bordered">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Added</th>
+			<th>Username</th>
+			<th>Clearance</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% users.forEach(function(user){ %>
+			<tr>
+				<td><%= user.fname + ' ' + user.lname %></td>
+				<td><%= user.email %></td>
+				<td><%= user.date_added %></td>
+				<td><%= user.username %></td>
+				<td><%= user.clearance == "admin" ? "Sudo" : "Basic" %>
+				<td>
+					<div class="btn-group">
+						<a class="btn dropdown-toggle btn-inverse" data-toggle="dropdown" href="#">
+							Actions
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="/admin/user/<%= user._id %>/settings">
+									Settings
+								</a>
+							</li>
+							<li>
+								<a href="/!#/<%= user.username %>" title="Profile">
+									Profile
+								</a>
+							</li>
+							<li>
+								<a href="/admin/user/<%= user._id %>/delete" title="Delete <$= user.username %>" class="delete">
+									Delete
+								</a>
+							</li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+		<% }) %>
+</table>
+<script src="/js/admin/users.js"></script>

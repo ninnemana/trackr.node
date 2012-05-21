@@ -1,0 +1,20 @@
+form.well(method='post', action='/admin/mods/' + module._id)
+	label Name
+		input.span3(type='text', name='name', placeholder='Enter a module name', value=module.name)
+
+	label Path
+		input.span3(type='text', name='path', placeholder='Enter the path for this module', value=module.path)
+
+	label Icon Class
+		input.span3(type='text', name='icon', placeholder='Declare the class for this icon', value=module.icon)
+
+	label Clearance
+		select(name='clearance')
+			if module.clearance === 'basic'
+				option(value='basic', selected)= 'Basic (Public)'
+				option(value='sudo')= 'Sudo (Admin)'
+			else
+				option(value='basic')= 'Basic (Public)'
+				option(value='sudo', selected)= 'Sudo (Admin)'
+
+	input.btn.btn-large.btn-success(type='submit', value='Save')

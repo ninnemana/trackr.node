@@ -1,0 +1,23 @@
+if error
+	div.alert.alert-error
+		button.close(data-dismiss="alert") x
+		span There was an error while processing your request. Did you fill in da blanks?
+		each err in error
+			p= '&bull; ' + err
+
+
+form.in(method="post",action="/auth/new")
+	label(for="nick")
+		input#nick(type="text",name="nick",placeholder="Enter a nickname",value= user.username)
+	label(for="email")
+		input#email(type="email",name="email",placeholder="Enter your e-mail address",value= user.email)
+	label(for="p1")
+		input#p1(type="password",name="p1",placeholder="Enter a password")
+	label(for="p2")
+		input#p2(type="password",name="p2",placeholder="Confirm the password")
+	label(for="fname")
+		input#fname(type="text",name="fname",placeholder="Enter your first name",value= user.fname)
+	label(for="lname")
+		input#fname(type="text",name="lname",placeholder="Enter your last name",value= user.lname)
+	input.btn.btn-large.btn-info(type="submit", value='Sign Up')
+script(type="text/javascript",defer,src="/js/auth.js")
