@@ -36,7 +36,6 @@ html, button, input, select, textarea { font-family: 'Open Sans', sans-serif; co
 
 body { 
   margin: 0; 
-  font-size: 1em; 
   line-height: 1.4; 
   background:#f1f1f1;
 }
@@ -55,8 +54,8 @@ body {
    Links
    ========================================================================== */
 
-a { color: #00e; }
-a:visited { color: #551a8b; }
+a { color: #08C; }
+/*a:visited { color: #551a8b; }*/
 a:hover { color: #06e; }
 a:focus { outline: thin dotted; }
 
@@ -229,6 +228,10 @@ td { vertical-align: top; }
     box-shadow: 1px 2px 2px #ccc;
     margin-bottom: 20px;
 }
+
+.left{ float:left }
+.right{ float:right }
+.table{ margin-top: 10px; margin-bottom: 10px }
 
 header.navbar{ 
   background:#fff;
@@ -408,13 +411,6 @@ div.content section.left-bar article.labels ul li{
     width: 90%;
 }
 
-div.content section.left-bar article.labels ul li a{
-    display:block;
-    height: 25px;
-    padding: 0px 15px;
-    text-decoration:none;
-}
-
 div.content section.left-bar article.labels ul li a:hover{
     background:rgb(175, 192, 195);
     background:rgba(175, 192, 195, 0.4);
@@ -429,8 +425,9 @@ div.content section.left-bar article.labels ul li span:last-child{
 
 div.content section[rel=main]{
     min-height:600px;
+    padding: 10px;
     float:right;
-    width: 1020px;
+    width: 1000px;
 }
 
 footer{

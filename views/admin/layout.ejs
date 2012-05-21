@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
@@ -46,13 +46,6 @@
           <img src="/img/logo.png" alt="Trackr Reporting" />
         </a>
 
-        <form class="navbar-form pull-left" method="get" action="/search">
-          <input type="search" name="search" class="global-search" placeholder="Search" />
-          <span class="search-input">
-            <img src="/img/search.png" alt="Search" />
-          </span>
-        </form>
-
         <ul class="nav">
           <li>
             <a href="#new" rel="tipsy" title="Report Issue">
@@ -65,7 +58,7 @@
             </a>
           </li>
           <li>
-            <a href="#logout" rel="tipsy" title="Logout">
+            <a href="/auth/out" rel="tipsy" title="Logout">
               <img src="/img/sign-out.png" alt-"Sign Out" />
             </a>
           </li>
@@ -77,17 +70,55 @@
   <div class="content">
       <section class="left-bar">
         <article class="module labels">
-          
+          <% if (typeof global_modules != 'undefined') { %>
+            <ul class="nav nav-list">
+              <li class="nav-header">
+                Admin Modules
+              </li>
+              <li class="divider"></li>
+            <% global_modules.forEach(function(mod){ %>
+              <li>
+                <a href="<%= mod.path %>" title="<%= mod.name %>">
+                  <i class="<%= mod.icon %>"></i>
+                  <%= mod.name %>
+                </a>
+              </li>
+            <% })
+          } %>
         </article>
       </section>
 
       <section rel="main" class="module">
+        <% if(typeof crumbs != 'undefined' && crumbs.length > 0){ %>
+          <ul class="breadcrumb">
+            <% crumbs.forEach(function(crumb){ 
+              if (!crumb.active){ %>
+                <li>
+                  <a href="<%= crumb.link %>"><%= crumb.name %></a> 
+                  <span class="divider">/</span>
+                </li>
+              <% }else{ %>
+                <li class="active"><%= crumb.name %></li>
+              <% } %>
+            <% }) %>
+          </ul>
+        <% } %>
+        <div class="alert-area">
+          <% if(typeof error != 'undefined'){ %>
+            <div class="alert-block alert">
+              <a class="close" data-dismiss="alert" href='#'>x</a>
+              <h4 class="alert-heading">There was an error while performing your request!</h4>
+              <p><%= error %></p>
+            </div>
+          <% } %>
+        </div>
+        
       	<%- body %>
       </section>
   </div>
 
   <div class="clearfix"></div>
-  <footer>
+  <!--footer>
     <div class="container">
       <img src="/img/emblem.png" alt="Trackr Reporting" class="emblem" />
       <section class="footer-links">
@@ -100,7 +131,7 @@
       </section>
       <img src="/img/snail.jpg" alt="Trackr Mascot - Freddy the Snail" class="snail" />
     </div>
-  </footer>
+  </footer-->
 
 
   <!-- JavaScript at the bottom for fast page loading: http://developer.yahoo.com/performance/rules.html#js_bottom -->
@@ -114,6 +145,9 @@
 
   <!-- load tipsy -->
   <script type="text/javascript" src="/js/jquery.tipsy.js"></script>
+
+  <!-- load mustache for templating -->
+  <script src="http://github.com/janl/mustache.js/raw/master/mustache.js"></script>
 
   <!-- scripts concatenated and minified via build script -->
   <script src="/js/plugins.js"></script>

@@ -1,4 +1,4 @@
-var auth 	= require('../User'),
+var User 	= require('../models/User'),
 	helpers = require('../db_helpers');
 
 /*
@@ -11,7 +11,7 @@ exports.in = function(req, res){
 };
 
 exports.allowed = function(req, res){
-	var user = auth.User;
+	var user = new User();
 	user.username = req.body.username;
 	user.password  = req.body.password;
 
@@ -21,8 +21,8 @@ exports.allowed = function(req, res){
 		}else{
 			req.session.user = {
 				provider: 'login',
-				id: user._id,
-				nick: user.username
+				nick: user.username,
+				clearance: user.clearance
 			};
 			res.redirect('/admin');	
 		}
@@ -33,11 +33,12 @@ exports.create = function(req, res){
 	var error = typeof req.query.error == 'undefined' || req.query.error == '' ? false : req.query.error.split(',');
 	var user;
 	if(!req.query.user || req.query.user.length === 0){
-		user = auth.User
+		user = new User();
+		console.log(new User());
 	}else{
 		user = JSON.parse(req.query.user);
 	}
-	res.render('auth/create', { layout: 'auth/layout', title: 'Sign Up', locals: { error: error, user: user}});
+	res.render('auth/create.jade', { layout: 'auth/layout.ejs', title: 'Sign Up', locals: { error: error, user: user}});
 };
 
 exports.save = function(req, res){
@@ -46,7 +47,7 @@ exports.save = function(req, res){
 			console.log('why you signup nobody?');
 			throw new Error('Information did not pass.');
 		}
-		var user = auth.User;
+		var user = new User();
 		user.username = req.body.nick;
 		user.email = req.body.email;
 		user.fname = req.body.fname;
@@ -68,7 +69,6 @@ exports.save = function(req, res){
 					nick: user.username
 				};
 				req.flash('notice','Welcome!');
-				req.viewVars.welcome_login = 'Welcome, ' + user.username;
 				res.redirect('/auth?success');
 			}
 		});
@@ -77,10 +77,7 @@ exports.save = function(req, res){
 	}
 };
 
-exports.show = function(req, res){
-	res.send(JSON.stringify(req.session.user));
-	/*var user = auth.User;
-	user.getAll(function(users){
-		res.send(JSON.stringify(users));
-	})*/
+exports.out = function(req, res){
+	req.session.destroy();
+	res.redirect("/auth");
 };
