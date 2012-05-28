@@ -21,6 +21,8 @@ audio:not([controls]) { display: none; }
 [hidden] { display: none; }
 
 
+
+
 /* =============================================================================
    Base
    ========================================================================== */
@@ -268,19 +270,12 @@ header.navbar div.navbar-inner form.navbar-form{
 header.navbar div.navbar-inner form.navbar-form input[type=search]{
     width: 175px;
     padding-right: 25px;
-    padding-left: 35px;
+    padding-left: 25px;
 }
 
-header.navbar div.navbar-inner form.navbar-form span.search-input{
-    background: url('img/search.png') no-repeat;
-    position:absolute;
-    left: 10px;
-    top:10px;
-}
-
-header.navbar div.navbar-inner form.navbar-form span.search-input img{
-    width: 20px;
-    opacity: 0.4;
+header.navbar div.navbar-inner form.navbar-form i.icon-search{
+    position: relative;
+    left: 23px;
 }
 
 header.navbar div.navbar-inner ul.nav{
@@ -408,7 +403,13 @@ div.content section.left-bar article.labels ul{
 
 div.content section.left-bar article.labels ul li{
     margin-bottom:5px;
-    width: 90%;
+}
+
+div.content section.left-bar article.labels ul li a{
+    display:block;
+    width:90%;
+    text-decoration:none;
+    padding-right: 10px
 }
 
 div.content section.left-bar article.labels ul li a:hover{
@@ -416,7 +417,7 @@ div.content section.left-bar article.labels ul li a:hover{
     background:rgba(175, 192, 195, 0.4);
 }
 
-div.content section.left-bar article.labels ul li span:last-child{
+div.content section.left-bar article.labels ul li span.badge-count{
     float:right;
     color: black;
     font-size: 14px;

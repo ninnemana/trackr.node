@@ -7,7 +7,7 @@ var express = require('express')
   , routes = require('./routes/public')
   , admin = require('./routes/admin')
   , auth = require('./routes/auth')
-  , labels = require('./models/IssueLabels')
+  , IssueLabel = require('./models/IssueLabels')
   , url = require('url')
   , Module = require('./models/Modules')
   , RedisStore = require('connect-redis')(express);
@@ -94,9 +94,17 @@ function requiresLogin(req, res, next){
 };
 
 function loadLabels(req, res, next){
-  return labels.IssueLabels.getAll(function(labels){
-    res.local('labels',labels);
-    next();
+  var label = new IssueLabel();
+  label.getAll(function(err,labels){
+    console.log(err, labels);
+    if(!err){
+      res.local('labels', labels);
+      next();
+    }else{
+      res.local('labels',new Array());
+      next();
+    }
+    
   });
 }
 
@@ -114,7 +122,14 @@ app.get('/auth/out',auth.out);
 app.get('/admin*', requiresLogin);
 app.get('/admin', admin.index);
 
-app.get('/admin/labels', admin.labels);
+app.get('/admin/badges/push', admin.labels.pushBadges);
+
+app.get('/admin/labels', admin.labels.index);
+app.get('/admin/labels/:id?', admin.labels.edit);
+app.post('/admin/labels/:id', admin.labels.save);
+app.get('/admin/labels/:id/delete', admin.labels.delete);
+
+
 
 
 app.get('/admin/users', admin.users.index);

@@ -1,0 +1,13 @@
+form.well(method='post', action='/admin/labels/' + label._id)
+	label Name
+		input.span3(type='text', name='name', placeholder='Enter a label name', value=label.name)
+
+	label Class Declaration
+		select(name='cssClass')
+			each badge in badges
+				if badge.cssClass == label.cssClass
+					option(selected, value=badge.cssClass)=badge.name + ' - ' + badge.cssClass
+				else
+					option(value=badge.cssClass)=badge.name + ' - ' + badge.cssClass
+
+	input.btn.btn-large.btn-success(type='submit', value='Save')

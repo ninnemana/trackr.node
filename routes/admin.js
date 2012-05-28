@@ -1,5 +1,10 @@
 var User = require('../models/User'),
-	Module = require('../models/Modules');
+	Module = require('../models/Modules'),
+	IssueLabel = require('../models/IssueLabels'),
+	IconClasses = require('../models/IconClasses'),
+	IssueBadge = require('../models/IssueBages'),
+	async = require('async');
+
 /*
  * GET home page.
  */
@@ -104,34 +109,53 @@ exports.mods = {
 		})
 	},
 	edit: function(req,res){
-		var mod = new Module();
-		mod._id = req.params.id;
-		mod.find(function(module){
-			var crumbs = [
-				{
-					"name": "Home",
-					"link": "/admin"
+		var module = new Module(),
+			mod = new Module(),
+			crumbs = new Array(),
+			classes = new Array();
+
+		async.parallel([
+				function(callback){
+					mod._id = req.params.id;
+					mod.find(function(resp_module){
+						module = resp_module;
+						crumbs = [
+							{
+								"name": "Home",
+								"link": "/admin"
+							},
+							{
+								"name": "Modules",
+								"link": "/admin/mods"
+							},
+							{
+								"name": module.name.length > 0 ? "Edit " + module.name + " Module" : "New Module",
+								"link": "#",
+								"active": true
+							}
+						];
+						callback();	
+					})
+				},function(callback){
+					var iconClass = new IconClasses();
+					iconClass.all(function(err, resp){
+						classes = resp;
+						callback();
+					})
 				},
-				{
-					"name": "Modules",
-					"link": "/admin/mods"
-				},
-				{
-					"name": module.name.length > 0 ? "Edit " + module.name : "New Module",
-					"link": module.path.length > 0 ? module.path : "",
-					"active": true
-				}
-			];
-			res.render('admin/modules/create.jade', { 
-				title: module.name.length > 0 ? "Edit " + module.name : "New Module", 
-				locals: { 
-					module: module, 
-					crumbs: crumbs,
-					error: req.query["err"]
-				}, 
-				layout: 'admin/layout.ejs'
+			],function(err, results){
+				res.render('admin/modules/create.jade', { 
+					title: module.name.length > 0 ? "Edit " + module.name : "New Module", 
+					locals: { 
+						module: module, 
+						crumbs: crumbs,
+						classes: classes,
+						error: req.query["err"]
+					}, 
+					layout: 'admin/layout.ejs'
+				});
 			});
-		})
+		
 	},
 	save: function(req, res){
 		var mod = new Module();
@@ -160,5 +184,98 @@ exports.mods = {
 				res.send(err, 404);
 			}
 		})
+	}
+}
+
+exports.labels = {
+	index: function(req, res){
+		var label = new IssueLabel();
+		label.getAll(function(err, labels){
+			if(err){
+				labels = new Array();
+			}
+			var crumbs = [
+				{
+					"name": "Home",
+					"link": "/"
+				},
+				{
+					"name": "Labels",
+					"link": "/admin/labels",
+					"active": true
+				}
+			];
+			res.render('admin/labels/index.jade', { title: 'Issue Labels', locals:{ labels: labels, crumbs: crumbs }, layout: 'admin/layout.ejs'})
+		})
+	},
+	edit: function(req, res){
+		var label = new IssueLabel(),
+			crumbs = new Array(),
+			badges = new Array();
+		async.parallel([
+			function(callback){
+				var iLabel = new IssueLabel();
+				iLabel._id = req.params.id;
+				iLabel.find(function(resp_label){
+					label = resp_label;
+					crumbs = [
+						{
+							"name": "Home",
+							"link": "/admin"
+						},
+						{
+							"name": "Labels",
+							"link": "/admin/labels"
+						},
+						{
+							"name": label.name.length > 0 ? "Edit " + label.name : "New Issue Label",
+							"link": "#",
+							"active": true
+						}
+					];
+				})
+				callback();
+			},
+			function(callback){
+				var badge = new IssueBadge();
+				badge.all(function(err, resp){
+					badges = resp;
+					callback();
+				})
+			},
+		],function(err, results){
+			res.render('admin/labels/create.jade', {
+				title: label.name.length > 0 ? "Edit " + label.name : "New Issue Label",
+				locals: {
+					label: label,
+					crumbs: crumbs,
+					badges: badges,
+					error: req.query["err"]
+				},
+				layout: 'admin/layout.ejs'
+			})
+		});
+	},
+	save: function(req, res){
+		var label = new IssueLabel();
+		label._id = req.params.id;
+		label.name = req.body.name;
+		label.cssClass = req.body.cssClass;
+		console.log(label._id);
+		label.create(function(err){
+			if(!err){
+				res.redirect('/admin/labels');
+			}else{
+				res.redirect('/admin/labels/' + label._id + '?err=' + err);
+			}
+		})
+	},
+	delete: function(req, res){
+
+	},
+	pushBadges: function(req, res){
+		var badges = new IssueBadge();
+		//badges.push();
+		res.redirect('/admin/labels');
 	}
 }

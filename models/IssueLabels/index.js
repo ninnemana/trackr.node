@@ -1,63 +1,49 @@
 var mongoose = require('mongoose');
 
-var mongohq_url = process.env.MONGOHQ_URL || 'mongodb://heroku:9d7d88ec83810d172f98065cb9398617@flame.mongohq.com:27078/app4216978';
+var mongohq_url = process.env.MONGOHQ_URL || 'mongodb://heroku:9d7d88ec83810d172f98065cb9398617@flame.mongohq.com:27078/app4216978',
+	db 			= mongoose.connect(mongohq_url),
+	Schema 		= db.Schema,
+	Label 		= new Object();
 
-var db 		= mongoose.connect(mongohq_url),
-	Schema 	= db.Schema,
-	Grid 	= mongoose.mongo.Grid;
-
-var buffer = new Buffer("Hello world");
-var gs = new mongoose.mongo.GridStore(mongoose.connection.db, "hello", "w", {
-	"chuck_size": 1024*4,
-	metadata: {
-		hash_path: "test",
-		hash:"t",
-		name: "hello"
-	}
+var LabelSchema = new Schema({
+	name: {type: String, unique: true, default: "", required: true},
+	cssClass: {type: String, default: "", required: true}
 });
 
-gs.open(function(err,store){
-	console.log('opened GridStore');
-	var buffer = new Buffer("Hello world");
-	gs.writeBuffer(buffer, true, function(err,chunk){
-		if(!err){
-			console.log(chunk.toString());
+mongoose.model('IssueLabel', LabelSchema);
+Label = mongoose.model('IssueLabel');
+
+var LabelModel = function(){};
+
+LabelModel.prototype.add = function(callback){
+	var query = { _id: this._id }.
+		updates = {name: this.name, cssClass: this.cssClass, };
+
+	Label.update(query, {$set: updates}, {upsert: true}, callback);
+}
+
+LabelModel.prototype.getAll = function(callback){
+	//Label.find({}, callback);
+	Label.find({}, function(err, labels){
+		callback(err, labels);
+	});
+}
+
+LabelModel.prototype.find = function(callback){
+	Label.findById(this._id, function(err, label){
+		if(!err && label != undefined){
+			callback(label);
 		}else{
-			console.log(err);
+			callback(new Label());
 		}
 	});
-});
+}
 
-//gs.put(buffer, {metadata:{category:'text'}, content_type: 'text'})
+LabelModel.prototype.create = function(callback){
+	var query = { _id: this._id },
+		updates = {name: this.name, cssClass: this.cssClass };
 
+	Label.update(query, {$set: updates}, {upsert: true}, callback);
+}
 
-// Remove this once you create the Issue model
-var Issue = new Object();
-
-var IssueLabelSchema = new Schema({
-	name: String,
-	hexColor: String,
-	issues: [Issue]
-});
-
-var IssueLabelModel = db.model('IssueLabelModel', IssueLabelSchema);
-
-var labels = {
-	add: function(name, hex, callback){
-		var label = new IssueLabelModel();
-		label.name = name;
-		label.hexColor = hex;
-		label.save();
-	},
-	getAll: function(callback){
-		IssueLabelModel.find({}, function(err, docs){
-			if(!err){
-				callback(docs);
-			}else{
-				throw(err);
-			}
-		});
-	}
-};
-
-exports.IssueLabels = labels;
+module.exports = LabelModel;

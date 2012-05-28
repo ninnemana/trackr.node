@@ -6,7 +6,13 @@ form.well(method='post', action='/admin/mods/' + module._id)
 		input.span3(type='text', name='path', placeholder='Enter the path for this module', value=module.path)
 
 	label Icon Class
-		input.span3(type='text', name='icon', placeholder='Declare the class for this icon', value=module.icon)
+		select(name='icon')
+			each lClass in classes
+				if lClass.name == module.icon
+					option(class=lClass.name, selected)=lClass.name
+						
+				else
+					option(class=lClass.name)=lClass.name
 
 	label Clearance
 		select(name='clearance')

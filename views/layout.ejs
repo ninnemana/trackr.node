@@ -47,10 +47,8 @@
         </a>
 
         <form class="navbar-form pull-left" method="get" action="/search">
+          <i class="icon-search"></i>
           <input type="search" name="search" class="global-search" placeholder="Search" />
-          <span class="search-input">
-            <img src="/img/search.png" alt="Search" />
-          </span>
         </form>
 
         <ul class="nav">
@@ -111,19 +109,20 @@
         </article>
 
         <article class="module labels">
-          <% if(labels !== undefined && labels.length > 0){ %>
+          <% if(typeof labels !== 'undefined' && labels.length > 0){ %>
             <ul>
               <% labels.forEach(function(label){ %>
                 <li>
                   <a href="#<%= label.name %>" title="<%= label.name %>">
-                    <span class="label" style="background-color:<%= label.hexColor %>"><%= label.name %></span>
-                    <span><%= label.issues.length %></span>
+                    <span class="label badge <%= label.cssClass %>"><%= label.name %></span>
+                    <span class="badge-count"><%= Math.ceil(Math.random()) %></span>
+                    <div class="clearfix"></div>
                   </a>
                 </li>
               <% }) %>
             </ul>
           <% } %>
-          <ul>
+          <!--ul>
             <li>
               <a href="#bug">
                 <span class="label">bug</span>
@@ -177,7 +176,7 @@
                 <span class="label">new feature</span>
                 <span>0</span>
               </a>
-            </li>
+            </li-->
         </article>
       </section>
 

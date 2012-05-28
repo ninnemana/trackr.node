@@ -1,0 +1,30 @@
+link(rel='stylesheet',href='/css/admin/labels.css',media='all')
+
+h2.left= 'Issue Labels'
+a.btn.btn-large.btn-success.right(href='/admin/labels/new', title='Add Label')= 'Add Label'
+div.clearfix
+table.table.table-striped.table-bordered
+	thead
+		tr
+			th= 'Name'
+			th= 'Class Declaration'
+			th= 'Issues'
+			th
+	tbody
+		for label in labels
+			tr
+				td= label.name
+				td= label.cssClass
+				td= '0'
+				td
+					div.btn-group
+						a.btn.dropdown-toggle.btn-inverse(data-toggle="dropdown", href="#") Action
+							Action
+							span.caret
+						ul.dropdown-menu
+							li
+								a(href="/admin/labels/" + label._id, title="Edit " + label.name) Edit
+							li
+								a.delete(href="/admin/labels/" + label._id + "/delete", title="Delete " + label.name) Delete
+
+script(src='/js/admin/labels.js')

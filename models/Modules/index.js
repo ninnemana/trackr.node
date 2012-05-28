@@ -13,7 +13,7 @@ var ModuleSchema = new Schema({
 });
 
 mongoose.model('ModuleModel', ModuleSchema);
-var Module = mongoose.model('ModuleModel');
+Module = mongoose.model('ModuleModel');
 
 var ModuleModel = function(){};
 
@@ -62,3 +62,5 @@ ModuleModel.prototype.deleteById = function(callback){
 }
 
 module.exports = ModuleModel;
+
+
