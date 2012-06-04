@@ -245,7 +245,6 @@ header.navbar div.navbar-inner{
   border:none;
   box-shadow:none;
   background:#fff;
-  width: 1366px;
   margin:auto;
 }
 
@@ -309,18 +308,18 @@ header.navbar div.navbar-inner ul.nav li a img{
 }
 
 div.content{
-    width: 1366px;
     margin:auto;
 }
 
 div.content section.left-bar{
-    width: 300px;
+    width: 25%;
+    max-width: 300px;
     float:left;
-    margin-right: 25px;
+    margin: 0 25px 0 5%;
 }
 
 div.content section.left-bar a.report-new{
-    width: 272px;
+    width: 89%;
     margin-bottom: 20px;
     text-align:left;
 }
@@ -417,6 +416,10 @@ div.content section.left-bar article.labels ul li a:hover{
     background:rgba(175, 192, 195, 0.4);
 }
 
+div.content section.left-bar article.labels ul li a span.label{
+    line-height:25px;
+}
+
 div.content section.left-bar article.labels ul li span.badge-count{
     float:right;
     color: black;
@@ -427,8 +430,9 @@ div.content section.left-bar article.labels ul li span.badge-count{
 div.content section[rel=main]{
     min-height:600px;
     padding: 10px;
-    float:right;
-    width: 1000px;
+    float:left;
+    width: 63%;
+    max-width: 1000px;
 }
 
 footer{
@@ -495,8 +499,135 @@ footer div.container img.snail{
    Modify as content requires.
    ========================================================================== */
 
-@media only screen and (min-width: 35em) {
-  /* Style adjustments for viewports that meet the condition */
+/* Smartphones (portrait and landscape) ----------- */
+@media all and (min-device-width : 320px) and (max-device-width : 480px) {
+    div.content section.left-bar{
+        width: 90%;
+        max-width: 90%;
+        float:none;
+        margin: 0 25px 0 5%;
+    }
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen and (min-width : 321px) {
+    
+    header.navbar{ 
+      background:#fff;
+      border-bottom: 2px solid #ccc;
+      box-shadow: none; 
+    }
+    
+    header.navbar div.navbar-inner{
+      border:none;
+      box-shadow:none;
+      background:#fff;
+      margin:auto;
+    }
+    
+    header.navbar div.navbar-inner a.logo{
+        padding-top: 0px;
+        padding-bottom: 10px;
+        margin-left: 60px;
+        display:block;
+    
+        width: 100%;
+    }
+    
+    header.navbar div.navbar-inner a.logo img{
+        width: 100px;
+    }
+    
+    header.navbar div.navbar-inner form.navbar-form{
+        margin-left: 0;
+        border:none;
+        position: static;
+        clear: both;
+    }
+    
+    header.navbar div.navbar-inner form.navbar-form input[type=search]{
+        width: 98%;
+        padding-right: 0;
+        padding-left: 25px;
+    }
+    
+    header.navbar div.navbar-inner form.navbar-form i.icon-search{
+        position: relative;
+        left: 23px;
+    }
+    
+    header.navbar div.navbar-inner ul.nav{
+        float:right;
+        margin:0;
+        padding:0 5px;
+        height:35px;
+        background:#f1f1f1;
+        background:-moz-linear-gradient(#F1F1F1,#E0E0E0);
+        background:-webkit-linear-gradient(#F1F1F1,#E0E0E0);
+        -mis-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr='#f1f1f1',endColorstr='#e0e0e0')";
+        box-shadow:0 1px 0 #fafafa,inset 0 1px 0 #fafafa;
+        border: 1px solid #ccc;
+        border-top:none;
+        border-radius: 0px 0px 8px 8px;
+    }
+    
+    header.navbar div.navbar-inner ul.nav li a{
+        display:inline-block;
+        cursor: pointer;
+        width: 20px;
+        padding: 5px 7px;
+    }
+    
+    header.navbar div.navbar-inner ul.nav li a:hover img{
+        opacity: 0.4;
+    }
+    
+    header.navbar div.navbar-inner ul.nav li a img{
+        width: 20px;
+    }
+    
+    
+    div.content section.left-bar{
+        width: 90%;
+        max-width: 90%;
+        float:none;
+        margin: 0 25px 0 5%;
+    }
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen and (max-width : 320px) {
+        /* Styles */
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+        /* Styles */
+}
+
+/* iPads (landscape) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) {
+        /* Styles */
+}
+
+/* iPads (portrait) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
+        /* Styles */
+}
+
+/* Desktops and laptops ----------- */
+@media only screen and (min-width : 1224px) {
+        /* Styles */
+}
+
+/* Large screens ----------- */
+@media only screen and (min-width : 1824px) {
+        /* Styles */
+}
+
+/* iPhone 4 ----------- */
+@media only screen and (-webkit-min-device-pixel-ratio : 1.5), only screen and (min-device-pixel-ratio : 1.5) {
+        /* Styles */
 }
 
 

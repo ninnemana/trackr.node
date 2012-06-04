@@ -8,7 +8,6 @@ var User = require('../models/User'),
 /*
  * GET home page.
  */
-
 exports.index = function(req, res){
 	var crumbs = [
 		{
@@ -35,9 +34,9 @@ exports.users = {
 					"active": "true"
 				}
 			];
-			var users = resp || new Array();
+			var users = resp || [];
 			res.render('admin/users/index.ejs', {title: 'Users', locals: { users: users, crumbs: crumbs}, layout: 'admin/layout.ejs'});
-		})
+		});
 	},
 	settings: function(req, res){
 		
@@ -75,9 +74,9 @@ exports.users = {
 			}else{
 				res.redirect('/admin/user/' + user._id + '/settings?err=' + err);
 			}
-		})
+		});
 	},
-	delete: function(req, res){
+	del: function(req, res){
 		var user = new User();
 		user._id = req.params.id;
 		user.deleteById(function(err, numAffected){
@@ -86,9 +85,9 @@ exports.users = {
 			}else{
 				res.send(err, 404);
 			}
-		})
+		});
 	}
-}
+};
 
 exports.mods = {
 	index: function(req,res){
@@ -106,13 +105,13 @@ exports.mods = {
 				}
 			];
 			res.render('admin/modules/index.jade', { title: 'Modules', locals: { mods: mods, crumbs: crumbs }, layout: 'admin/layout.ejs'});
-		})
+		});
 	},
 	edit: function(req,res){
 		var module = new Module(),
 			mod = new Module(),
-			crumbs = new Array(),
-			classes = new Array();
+			crumbs = [],
+			classes = [];
 
 		async.parallel([
 				function(callback){
@@ -134,24 +133,24 @@ exports.mods = {
 								"active": true
 							}
 						];
-						callback();	
-					})
+						callback();
+					});
 				},function(callback){
 					var iconClass = new IconClasses();
 					iconClass.all(function(err, resp){
 						classes = resp;
 						callback();
-					})
-				},
+					});
+				}
 			],function(err, results){
-				res.render('admin/modules/create.jade', { 
-					title: module.name.length > 0 ? "Edit " + module.name : "New Module", 
-					locals: { 
-						module: module, 
+				res.render('admin/modules/create.jade', {
+					title: module.name.length > 0 ? "Edit " + module.name : "New Module",
+					locals: {
+						module: module,
 						crumbs: crumbs,
 						classes: classes,
 						error: req.query["err"]
-					}, 
+					},
 					layout: 'admin/layout.ejs'
 				});
 			});
@@ -172,9 +171,9 @@ exports.mods = {
 				res.redirect('/admin/mods/' + mod._id + '?err=' + err);
 			}
 
-		})
+		});
 	},
-	delete: function(req, res){
+	del: function(req, res){
 		var mod = new Module();
 		mod._id = req.params.id;
 		mod.deleteById(function(err, numAffected){
@@ -183,16 +182,16 @@ exports.mods = {
 			}else{
 				res.send(err, 404);
 			}
-		})
+		});
 	}
-}
+};
 
 exports.labels = {
 	index: function(req, res){
 		var label = new IssueLabel();
 		label.getAll(function(err, labels){
 			if(err){
-				labels = new Array();
+				labels = [];
 			}
 			var crumbs = [
 				{
@@ -205,13 +204,13 @@ exports.labels = {
 					"active": true
 				}
 			];
-			res.render('admin/labels/index.jade', { title: 'Issue Labels', locals:{ labels: labels, crumbs: crumbs }, layout: 'admin/layout.ejs'})
-		})
+			res.render('admin/labels/index.jade', { title: 'Issue Labels', locals:{ labels: labels, crumbs: crumbs }, layout: 'admin/layout.ejs'});
+		});
 	},
 	edit: function(req, res){
 		var label = new IssueLabel(),
-			crumbs = new Array(),
-			badges = new Array();
+			crumbs = [],
+			badges = [];
 		async.parallel([
 			function(callback){
 				var iLabel = new IssueLabel();
@@ -233,7 +232,7 @@ exports.labels = {
 							"active": true
 						}
 					];
-				})
+				});
 				callback();
 			},
 			function(callback){
@@ -241,8 +240,8 @@ exports.labels = {
 				badge.all(function(err, resp){
 					badges = resp;
 					callback();
-				})
-			},
+				});
+			}
 		],function(err, results){
 			res.render('admin/labels/create.jade', {
 				title: label.name.length > 0 ? "Edit " + label.name : "New Issue Label",
@@ -253,7 +252,7 @@ exports.labels = {
 					error: req.query["err"]
 				},
 				layout: 'admin/layout.ejs'
-			})
+			});
 		});
 	},
 	save: function(req, res){
@@ -268,9 +267,9 @@ exports.labels = {
 			}else{
 				res.redirect('/admin/labels/' + label._id + '?err=' + err);
 			}
-		})
+		});
 	},
-	delete: function(req, res){
+	del: function(req, res){
 
 	},
 	pushBadges: function(req, res){

@@ -3,14 +3,14 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes/public')
-  , admin = require('./routes/admin')
-  , auth = require('./routes/auth')
-  , IssueLabel = require('./models/IssueLabels')
-  , url = require('url')
-  , Module = require('./models/Modules')
-  , RedisStore = require('connect-redis')(express);
+var express = require('express'),
+    routes = require('./routes/public'),
+    admin = require('./routes/admin'),
+    auth = require('./routes/auth'),
+    IssueLabel = require('./models/IssueLabels'),
+    url = require('url'),
+    Module = require('./models/Modules'),
+    RedisStore = require('connect-redis')(express);
 
 var app = module.exports = express.createServer();
 
@@ -23,8 +23,6 @@ app.configure('production', function(){
   console.log(redisUrl);
   var redisAuth = redisUrl.auth.split(':');
 
-
-  console.log(redisUrl);  
   app.set('redisHost', redisUrl.hostname);
   app.set('redisPort', redisUrl.port);
   app.set('redisDb', redisAuth[0]);
@@ -47,9 +45,6 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
-  //app.use(express.cookieDecoder());
-  
-  
 
   app.use(express.session({
       secret: 'j@cks0n',
@@ -61,11 +56,6 @@ app.configure(function(){
       })
   }));
 
-  /*app.use(express.session({ 
-    secret: process.env.CLIENT_SECRET || 'j@cks0n',
-    maxAge: Date.now + 7200000,
-    store: new RedisStore({ maxAge: Date.now * 7200000 })
-  }));*/
   app.use(express.query());
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
@@ -127,7 +117,7 @@ app.get('/admin/badges/push', admin.labels.pushBadges);
 app.get('/admin/labels', admin.labels.index);
 app.get('/admin/labels/:id?', admin.labels.edit);
 app.post('/admin/labels/:id', admin.labels.save);
-app.get('/admin/labels/:id/delete', admin.labels.delete);
+app.get('/admin/labels/:id/delete', admin.labels.del);
 
 
 
@@ -135,17 +125,17 @@ app.get('/admin/labels/:id/delete', admin.labels.delete);
 app.get('/admin/users', admin.users.index);
 app.get('/admin/user/:id?/settings', admin.users.settings);
 app.post('/admin/user/:id/settings', admin.users.save);
-app.get('/admin/user/:id/delete', admin.users.delete);
+app.get('/admin/user/:id/delete', admin.users.del);
 
 app.get('/admin/mods',admin.mods.index);
 app.get('/admin/mods/:id?', admin.mods.edit);
 app.post('/admin/mods/:id', admin.mods.save);
-app.get('/admin/mods/:id/delete', admin.mods.delete);
+app.get('/admin/mods/:id/delete', admin.mods.del);
 
 
 /* Public Routes */
 app.get('/*', loadLabels);
-app.get('/', loadLabels, routes.index)
+app.get('/', loadLabels, routes.index);
 
 
 app.listen(process.env.PORT || 3000);
