@@ -1,1 +1,0 @@
-exports.stripErrors=function(a){var b,c=[];for(b in a.errors)c.push(a.errors[b].type);return c};exports.omitter=function(a,b){var c={};for(key in a)b.indexOf(key)==-1&&(c[key]=a[key]);return c};

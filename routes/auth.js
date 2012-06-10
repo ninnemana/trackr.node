@@ -1,11 +1,12 @@
-var User 	= require('../models/User'),
+var User	= require('../models/User'),
 	helpers = require('../db_helpers');
+
 
 /*
  * GET Login.
  */
 
-exports.in = function(req, res){
+exports.login = function(req, res){
 	var error = typeof req.query.error == 'undefined' ? false : true;
 	res.render('auth/in', { layout: 'auth/layout', title: 'Authenticate', locals: { error: error }});
 };
@@ -16,7 +17,7 @@ exports.allowed = function(req, res){
 	user.password  = req.body.password;
 
 	user.login(function(user){
-		if(user == null){
+		if(user === null){
 			res.redirect('/auth?error');
 		}else{
 			req.session.user = {
@@ -24,14 +25,14 @@ exports.allowed = function(req, res){
 				nick: user.username,
 				clearance: user.clearance
 			};
-			res.redirect('/admin');	
+			res.redirect('/admin');
 		}
 	});
 };
 
 exports.create = function(req, res){
-	var error = typeof req.query.error == 'undefined' || req.query.error == '' ? false : req.query.error.split(',');
-	var user;
+	var error = typeof req.query.error === 'undefined' || req.query.error === '' ? false : req.query.error.split(','),
+		user;
 	if(!req.query.user || req.query.user.length === 0){
 		user = new User();
 		console.log(new User());
@@ -56,7 +57,7 @@ exports.save = function(req, res){
 		user.add(function(err){
 			if(err){
 				var list = helpers.stripErrors(err);
-				if(list.length == 0){
+				if(list.length === 0){
 					if(err.code == 11000){ // Duplicate key error on username
 						list.push('A user already exists for that username or e-mail');
 					}

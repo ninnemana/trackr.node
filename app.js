@@ -74,24 +74,23 @@ function requiresLogin(req, res, next){
       mod.findAll('sudo',function(arr){
         res.local('global_modules', arr);
         next();
-      })
+      });
       //var mondules = modules.getUserModules();
       
     }else{
       res.redirect('/');
     }
   }
-};
+}
 
 function loadLabels(req, res, next){
   var label = new IssueLabel();
   label.getAll(function(err,labels){
-    console.log(err, labels);
     if(!err){
       res.local('labels', labels);
       next();
     }else{
-      res.local('labels',new Array());
+      res.local('labels',[]);
       next();
     }
     
@@ -101,11 +100,11 @@ function loadLabels(req, res, next){
 // Routes
 
 /* Authenticaton Routes */
-app.get('/auth', auth.in);
+app.get('/auth', auth.login);
 app.get('/auth/new', auth.create);
 app.post('/auth/new', auth.save);
 app.post('/auth/allowed', auth.allowed);
-app.get('/auth/allowed', auth.in);
+app.get('/auth/allowed', auth.login);
 app.get('/auth/out',auth.out);
 
 /* Admin Routes */

@@ -1,21 +1,21 @@
 var mongoose = require('mongoose');
 
 var mongohq_url = process.env.MONGOHQ_URL || 'mongodb://heroku:9d7d88ec83810d172f98065cb9398617@flame.mongohq.com:27078/app4216978',
-    db 			= mongoose.connect(mongohq_url),
-	Schema 		= db.Schema,
-	User 		= new Object();
+    db			= mongoose.connect(mongohq_url),
+	Schema		= db.Schema,
+	User		= {};
 
 function validUsername(u){
 	return u.length > 7;
-};
+}
 
 function validEmail(e){
 	return e.length > 0;
-};
+}
 
 function validPass(p){
 	return p.length > 5;
-};
+}
 
 var UserSchema = new Schema({
 	username: { type: String, unique: true, default: "", required: true, validate: [validUsername, 'Nickname is not valid. Must be at least 8 characters']},
@@ -46,6 +46,7 @@ UserModel.prototype.add = function(callback){
 		callback(err);
 	});
 };
+
 UserModel.prototype.get = function(id, username, email, callback){
 	if(id !== undefined){
 		User.findById(id, function(err, user){
@@ -75,6 +76,7 @@ UserModel.prototype.get = function(id, username, email, callback){
 		throw new Error('Cannot find User without reference.');
 	}
 };
+
 UserModel.prototype.login = function(callback){
 	User.findOne({ $or:[{username: this.username}, {email: this.username}], password: this.password}, function(err,user){
 		if(err === undefined){
@@ -83,7 +85,8 @@ UserModel.prototype.login = function(callback){
 			callback(user);
 		}
 	});
-}
+};
+
 UserModel.prototype.getAll = function(callback){
 	User.find({}, function(err, users){
 		if(err === undefined){
@@ -92,19 +95,20 @@ UserModel.prototype.getAll = function(callback){
 			callback(users);
 		}
 	});
-}
+};
+
 UserModel.prototype.create = function(callback){
-	var query = { _id : this._id };
-	var updates = { fname: this.fname, lname: this.lname, email: this.email }
+	var query = { _id : this._id },
+		updates = { fname: this.fname, lname: this.lname, email: this.email };
 
 	User.update(query, {$set: updates}, callback);
 
 };
+
 UserModel.prototype.deleteById = function(callback){
 	var conditions = { _id : this._id };
 	User.remove(conditions, callback);
-}
+};
 
 
 module.exports = UserModel;
-
