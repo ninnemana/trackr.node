@@ -1,0 +1,111 @@
+!!! 5
+//if lt IE 7
+	html.no-js.lt-ie9.lt-ie8.lt-ie7  
+//if IE 7
+	html.no-js.lt-ie9.lt-ie8  
+//if IE 8
+	html.no-js.lt-ie9  
+// [if gt IE 8] <!
+html.no-js
+	// <![endif]
+	head
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+		title= title
+		meta(name='description', content='')
+		meta(name='viewport', content='width=device-width')
+
+		link(rel='shortcut icon',href='/favicon.ico')
+		link(rel='stylesheet', href='/css/bootstrap.min.css')
+		link(rel='stylesheet', href='/css/bootstrap-responsive.min.css')
+		link(rel='stylesheet', href='/css/tipsy.css')
+		link(rel='stylesheet', href='/css/style.css')
+		script(src='/js/vendor/modernizr.min.js')
+	body
+		//if lt IE 7
+			p.chromeframe
+				| You are using an outdated browser.
+				a(href='http://browsehappy.com/') Upgrade your browser today
+				| or
+				a(href='http://www.google.com/chromeframe/?redirect=true') install Google Chrome Frame
+				| to better experience this site.
+		
+		header.top-bar.navbar
+			div.navbar-inner
+				div.container
+					a.logo.brand(title='Trackr Reporting', href='')
+						img(src='/img/logo.png', alt='Trackr Reporting')
+
+					form.navbar-form.pull-left(method='get', action='/search')
+						i.icon-search
+						input.global-search(type='search', name='search', placeholder='Search')
+		
+					ul.nav
+						li
+							a(rel='tipsy', href='#new', title='Report Issue')
+								img(src='/img/plus.png', alt='Report an Issue')
+						li
+							a(href='#account', rel='tipsy', title='Account Settings')
+								img(src='/img/config.png', alt='Account Search')
+						li
+							a(href='/auth/out', rel='tipsy', title='Logout')
+								img(src='/img/sign-out.png', alt='Logout')
+
+		div.content
+			section.left-bar
+					
+				a.btn.btn-primary.btn-large.report-new(href='/new', title='Report Issue')
+					span +
+					span Report an Issue
+
+				article.issue-types.module
+					ul
+						li
+							a.active(href='#everyone')
+								span Everyones Issue
+								span 7
+
+						li
+							a.active(href='#created')
+								span Created by you
+								span 2
+
+						li
+							a.active(href='#mention')
+								span Mentioning you
+								span 0
+
+						li
+							a.active(href='#assigned')
+								span Assigned to you
+								span 4
+				
+				article.module.labels
+
+					if typeof labels !== 'undefined' && labels.length > 0
+						ul
+							each label in labels
+								- var num = Math.floor(Math.random()*11)
+								li
+									a(href='#{label.name}', title='#{label.name}')
+										span.label.badge(class='#{label.cssClass}') #{label.name}
+										span.badge-count= num
+										div.clearfix
+
+			section.module(rel='main')!= body
+
+	div.clearfix
+	
+	script('src='//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js')
+
+	script(src='/js/bootstrap.min.js')
+	script(src='/js/jquery.tipsy.js')
+	script(src='/js/plugins.js')
+	script(src='/js/main.js')
+
+
+	script
+		var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+		g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+		s.parentNode.insertBefore(g,s)}(document,'script'));

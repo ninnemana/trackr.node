@@ -10,7 +10,8 @@ var express = require('express'),
     IssueLabel = require('./models/IssueLabels'),
     url = require('url'),
     Module = require('./models/Modules'),
-    RedisStore = require('connect-redis')(express);
+    RedisStore = require('connect-redis')(express),
+    stylus = require('stylus');
 
 var app = module.exports = express.createServer();
 
@@ -41,7 +42,21 @@ app.configure('development', function(){
 
 app.configure(function(){
   app.set('views', __dirname + '/views');
-  app.set('view engine', 'ejs');
+  app.set('view engine', 'jade');
+
+  app.use(stylus.middleware({
+    src: __dirname + '/public/styl', // .styl files are located in `views/stylesheets`
+    dest: __dirname + '/public/css', // .styl resources are compiled `/stylesheets/*.css`
+    debug: true,
+    force: true,
+    compile: function (str, path, fn) { // optional, but recommended
+      console.log('inside');
+      stylus(str)
+      .set('filename', path)
+      .set('compress', true)
+      .render(fn);
+    }
+  }));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
@@ -56,12 +71,12 @@ app.configure(function(){
       })
   }));
 
+  
+
   app.use(express.query());
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
 });
-
-
 
 
 
